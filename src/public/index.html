@@ -1,0 +1,118 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Log</title>
+    <style>
+        table, th, td {
+  border: 1px solid black;
+}
+    </style>
+</head>
+<body>
+    <h1>Visitor log</h1>  
+  
+
+    
+        Name:<input type="text" name="name" placeholder="Name" id="name"><br>
+        Name of Assistant:<input type="text" name="assistant" placeholder="Name of Assistant" id="assistant"><br>
+        Age:<input type="text" name="age" placeholder="Age" id="age"><br>
+        Date of Visit:<input type="text" name="date" placeholder="Date of Visit" id="date"><br>
+        Time of Visit:<input type="text" name="time" placeholder="Time of Visit" id="time"><br>
+        Comment:<input type="text" name="comment" placeholder="Comment" id="comment"><br>
+        <button onclick="addNewVisitor()">Add</button>
+        <hr>
+        <div id="allVisitors">
+            <table id="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Assistant</th>
+                    <th>Age</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>comment</th>
+                </tr>
+            </table>
+        </div>
+        
+      
+    <script>
+        async function  addNewVisitor() {
+            let name = document.getElementById("name").value;
+            let assistant = document.getElementById("assistant").value;
+            let age = document.getElementById("age").value;
+            let date = document.getElementById("date").value;
+            let time = document.getElementById("time").value;
+            let comment = document.getElementById("comment").value;
+
+            let userObject = {name, assistant, age, date, time, comment};
+            let forward = await fetch('/addNewVisitor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userObject)
+            } )
+            let response = await forward.json();
+            console.log(response);
+        }
+        async function viewVisitors() {
+            let list = await fetch('/viewVisitors')
+            let seeList = await list.json()
+            console.log(seeList)
+            let tr,table,eltd1,eltd2,eltd3,eltd4,eltd5,eltd6
+            table = document.getElementById("table");
+
+               
+             
+            for (i = 0; i < seeList.length; i++) {
+                tr = document.createElement("tr")
+              /*  eltd1 = document.createElement("name");
+                eltd1.innerHTML = seeList[i].name
+                tr.appendChild(eltd1)
+                eltd2 = document.createElement("assistand"); 
+                eltd1.innerHTML = seeList[i].assistant
+                tr.appendChild(eltd2) 
+                eltd3 = document.createElement("age");
+                eltd1.innerHTML = seeList[i].age
+                tr.appendChild(eltd3)
+                eltd4 = document.createElement("date");
+                eltd1.innerHTML = seeList[i].date
+                tr.appendChild(eltd4)
+                eltd5 = document.createElement("time");
+                eltd1.innerHTML = seeList[i].time
+                tr.appendChild(eltd5)
+                eltd6 = document.createElement("comment");
+                eltd1.innerHTML = seeList[i].comment
+                tr.appendChild(eltd6)*/
+
+                
+
+                let row = table.insertRow(i + 1)
+
+                eltd1 = row.insertCell(i)
+                eltd2 = row.insertCell(i + 1)
+                eltd3 = row.insertCell(i + 2)
+                eltd4 = row.insertCell(i + 3)
+                eltd5 = row.insertCell(i + 4)
+                eltd6 = row.insertCell(i + 5)
+
+                eltd1.innerHTML[i] = "name";
+                eltd2.innerHTML[i] = "assistant";
+                eltd3.innerHTML[i] = "age";
+                eltd4.innerHTML[i] = "date";
+                eltd5.innerHTML[i] = "time";
+                eltd6.innerHTML[i] = "comment";
+
+
+          
+                }
+            
+        }
+        viewVisitors();
+
+    </script>
+</body>
+</html>
