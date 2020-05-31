@@ -83,21 +83,12 @@ const addContent  = async(obj) =>{
 }
 
 // delete visitor from list
-const deleteContent  = async(id) =>{
-	let text, query;
-	text = `DELETE FROM visitors WHERE visitorid = $1 RETURNING`
+const deleteVisitor  = async (id) =>{
+	const query = `DELETE FROM visitors WHERE visitorID = $1 RETURNING *`;
+	const res = await client.query(query, [id]);
 
-	try {
-		query = await client.query(text,[id])
-		console.log(query.rows)
-		
-	} catch(e) {
-		console.log(e);	
-	}
-
-	return query.rows;
+	return res.rows
 }
-//deleteContent();
 
 // update visitor log
 
@@ -160,5 +151,5 @@ module.exports = {
 	updateContent,
 	displayOneContent,
 	deleteall,
-	deleteContent
+	deleteVisitor
 }

@@ -2,15 +2,15 @@ let express = require('express');
 let cors = require('cors');
 const { request } = require('http');
 let app = express();
-let {addContent, displayAll, deleteContent} = require('./database')
+let {addContent, displayAll,  deleteVisitor} = require('./database')
 
-
-app.use(express.static('public'));
 app.use(express.json());
+app.use(express.urlencoded())
 app.use(cors());
+app.use(express.static('public'));
 
 app.get('/', function (req,res) {
-   res.sendFile('index.html')
+   return res.sendFile('index.html')
 })
 
 app.post('/addNewVisitor', async function (req,res) {
@@ -29,9 +29,9 @@ app.get('/viewVisitors', async function (req,res) {
     });
 });
 
-app.delete('/deleteContent/:id', async (req, res) => {
+app.delete('/deleteVisitor/:id', async (req, res) => {
     const id = req.params.id;
-    const visitor = await deleteContent(id);
+    const visitor = await deleteVisitor(id);
     res.status(200).json({
         status: 'Deleted',
         visitor: visitor[0]

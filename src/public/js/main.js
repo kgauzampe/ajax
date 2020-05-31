@@ -35,35 +35,35 @@ const createColumns = visitor => {
 	
 	let row = document.createElement('tr');
 
-	let tdvisitorid = document.createElement('td');
-	tdvisitorid.innerHTML = visitor.visitorid;
-	row.appendChild(tdvisitorid);
+	let eltdvisitorid = document.createElement('td');
+	eltdvisitorid.innerHTML = visitor.visitorid;
+	row.appendChild(eltdvisitorid);
 
 	
-	let tdvisitorName = document.createElement('td');
-	tdvisitorName.innerHTML = visitor.visitorname;
-	row.appendChild(tdvisitorName)
+	let eltdvisitorName = document.createElement('td');
+	eltdvisitorName.innerHTML = visitor.visitorname;
+	row.appendChild(eltdvisitorName)
 
 
-	let tdvisitorAge = document.createElement('td');
-	tdvisitorAge.innerHTML = visitor.visitorage;
-	row.appendChild(tdvisitorAge);
+	let eltdvisitorAge = document.createElement('td');
+	eltdvisitorAge.innerHTML = visitor.visitorage;
+	row.appendChild(eltdvisitorAge);
 
-	let tdDateOfVisit = document.createElement('td');
-	tdDateOfVisit.innerHTML = new Date(visitor.dateofvisit).toLocaleDateString();
-	row.appendChild(tdDateOfVisit);
+	let eltdDateOfVisit = document.createElement('td');
+	eltdDateOfVisit.innerHTML = new Date(visitor.dateofvisit).toLocaleDateString();
+	row.appendChild(eltdDateOfVisit);
 
-	let tdTimeOfVisit = document.createElement('td');
-	tdTimeOfVisit.innerHTML = visitor.timeofvisit;
-	row.appendChild(tdTimeOfVisit);
+	let eltdTimeOfVisit = document.createElement('td');
+	eltdTimeOfVisit.innerHTML = visitor.timeofvisit;
+	row.appendChild(eltdTimeOfVisit);
 
-	let tdAssistant = document.createElement('td');
-	tdAssistant.innerHTML = visitor.nameofassistant;
-	row.appendChild(tdAssistant);
+	let eltdAssistant = document.createElement('td');
+	eltdAssistant.innerHTML = visitor.nameofassistant;
+	row.appendChild(eltdAssistant);
 
-	let tdComments = document.createElement('td');
-	tdComments.innerHTML = visitor.comments;
-	row.appendChild(tdComments);
+	let eltdComments = document.createElement('td');
+	eltdComments.innerHTML = visitor.comments;
+	row.appendChild(eltdComments);
 	
 
 	const button = DeleteButton(visitor.visitorid);
@@ -84,7 +84,7 @@ const DeleteButton = id => {
 const deleteRow = async(id) => {
 	const tbody = document.getElementById('visitors');
 	const row = document.getElementById(`visitor-${id}`);
-	const res = await fetch(`/deleteContent/${id}`, {
+	const res = await fetch(`/deleteVisitor/${id}`, {
 		method: 'delete'
 	});
 
