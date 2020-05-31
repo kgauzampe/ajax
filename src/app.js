@@ -2,7 +2,7 @@ let express = require('express');
 let cors = require('cors');
 const { request } = require('http');
 let app = express();
-let {addContent, displayAll} = require('./database')
+let {addContent, displayAll, deleteContent} = require('./database')
 
 
 app.use(express.static('public'));
@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', function (req,res) {
-   res.status(200).sendFile('index.html')
+   res.sendFile('index.html')
 })
 
 app.post('/addNewVisitor', async function (req,res) {
@@ -22,9 +22,21 @@ app.post('/addNewVisitor', async function (req,res) {
 })
 
 app.get('/viewVisitors', async function (req,res) {
-    let view = await displayAll()
-    res.status(200).json(view)
-})
+    const visitors = await displayAll();
+    res.status(200).json({
+        status: 'ok',
+        visitors: visitors
+    });
+});
+
+app.delete('/deleteContent/:id', async (req, res) => {
+    const id = req.params.id;
+    const visitor = await deleteContent(id);
+    res.status(200).json({
+        status: 'Deleted',
+        visitor: visitor[0]
+    });
+});
 
 let port = process.env.PORT || 9001;
 

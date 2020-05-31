@@ -41,7 +41,7 @@ createTable()
 //display content of table
 const displayAll  = async() =>{
 	let text, values, query;
-	text = `select * From visitors`
+	text = `select * From visitors`;
 	
 	try {
 		query = await client.query(text,values)
@@ -49,10 +49,9 @@ const displayAll  = async() =>{
 		
 	} catch(e) {
 		console.log(e);
-	
 	}
 }
-displayAll();
+
 // Insert the content
 const addContent  = async(obj) =>{
 	let text, query;
@@ -84,19 +83,19 @@ const addContent  = async(obj) =>{
 }
 
 // delete visitor from list
-const deleteContent  = async() =>{
-	let text, values, query;
-	text = `DELETE FROM visitors WHERE visitorID = 3`
+const deleteContent  = async(id) =>{
+	let text, query;
+	text = `DELETE FROM visitors WHERE visitorid = $1 RETURNING`
 
-	
 	try {
-		query = await client.query(text,values)
+		query = await client.query(text,[id])
 		console.log(query.rows)
 		
 	} catch(e) {
-		console.log(e);
-		
+		console.log(e);	
 	}
+
+	return query.rows;
 }
 //deleteContent();
 
@@ -160,6 +159,6 @@ module.exports = {
 	displayAll,
 	updateContent,
 	displayOneContent,
-	deleteall
-
+	deleteall,
+	deleteContent
 }
